@@ -10,7 +10,7 @@ function QuestionList() {
                     <span>
                        10 questions.
                     </span>
-                    <Link className="btn btn-primary" to="add-question">Poser une question <i className="la la-arrow-right"></i></Link>
+                    <Link className="btn btn-primary" to="/add-question">Poser une question <i className="la la-arrow-right"></i></Link>
                    
                 </div>
                 

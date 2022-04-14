@@ -16,7 +16,7 @@ function QuestionDetails() {
                         <AddComment/>
                 </div>
                 <div className="col-md-12 col-lg-3">
-                    <Link to='/'>
+                    <Link to='/home'>
                         Retour <i className="la la-arrow-left"></i>
                     </Link>
                 </div>

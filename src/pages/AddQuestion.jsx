@@ -1,7 +1,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import TagField from './../components/TagField';
 
 function AddQuestion() {
+
+
+    
+    const suggestions = [
+        "apple",
+        "banana",
+        "cucumber",
+        
+      ];
+
+
   return (
     <div>
           <div className="container mt-4 pb-4">
@@ -15,7 +27,7 @@ function AddQuestion() {
                       </div>
 
                       <div className='col-2'>
-                          <Link to="/">
+                          <Link to="/home">
                               Retour <i className="la la-arrow-left"></i>
                           </Link>
                       </div>
@@ -23,7 +35,7 @@ function AddQuestion() {
 
 
                           <div className="col-12 form-group mt-4">
-                              <label for="title" className="questions__form-label">Titre de la question</label>
+                              <label htmlFor="title" className="questions__form-label">Titre de la question</label>
                               <input type="text" className="form-control" id="title" name="title" />
 
 
@@ -35,7 +47,7 @@ function AddQuestion() {
                           </div>
 
                           <div className="col-12 form-group">
-                              <label for="content" className="questions__form-label">Contenu de la question</label>
+                              <label htmlFor="content" className="questions__form-label">Contenu de la question</label>
                               <textarea name="content" id="content" cols="30" rows="10" className="form-control " ></textarea>
                               {/* @error('content')
                             <span className="invalid-feedback" role="alert">
@@ -46,8 +58,9 @@ function AddQuestion() {
                           </div>
 
                           <div className="col-12 form-group">
-                              <label for="content" className="questions__form-label">Technologies / Categories</label>
-                              <input type="text" className="input-tag form-control" name="tags" id="content" />
+                              <label htmlFor="content" className="questions__form-label">Technologies / Categories</label>
+                              {/* <input type="text" className="input-tag form-control" name="tags" id="content" /> */}
+                              <TagField suggestions={suggestions}/>
                               {/* @error('tags')
                             <span className="invalid-feedback" role="alert">
                                 <strong>Veuillez choisir une catégorie svp </strong>

@@ -9,7 +9,7 @@ function Question() {
 <div className="card no-border p-3 my-3">
                     <div className="question ">
                         <h2 className="question__title">
-                            <Link to={`question/1/details`} className="question__link">
+                            <Link to={`/question/1/details`} className="question__link">
                                 Question 1
                             </Link>
                         </h2>

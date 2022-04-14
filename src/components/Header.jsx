@@ -1,7 +1,26 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUserAuth } from './../context/UserAuthContextProvider';
 
 function Header() {
+  const {user, logOut} = useUserAuth();
+  const navigate = useNavigate();
+  const handleLogout = async(e) =>
+
+  {
+    e.preventDefault();
+
+    try {
+      await logOut();
+      navigate('/');
+    }catch(e) {
+
+    }
+   
+
+
+
+  }
   return (
     <div id="app" className="">
       <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -25,43 +44,39 @@ function Header() {
             <ul className="navbar-nav mr-auto"></ul>
 
             <ul className="navbar-nav ml-auto">
+              {user ? 
+               <>
+                <li className="nav-item">
+                <Link className="nav-link" to="/">
+                  {user.email}
+
+            
+                </Link>
+              </li>
+
+                <li className="nav-item">
+                <a className="nav-link" onClick={handleLogout} href="#empty">
+                 Logout
+                </a>
+              </li>
+              </>
+
+                : 
+                <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/">
+                    Login
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link className="nav-link" to="register">
+                      Register
+                  </Link>
+                </li>
+              </>
+              }
               
-
-              <li className="nav-item">
-                <a className="nav-link" href="#empty">
-                  Login
-                </a>
-              </li>
-
-              <li className="nav-item">
-                <a className="nav-link" href="#empty">
-                  Register
-                </a>
-              </li>
-
-              {/* <li className="nav-item dropdown">
-                <a
-                  id="navbarDropdown"
-                  className="nav-link dropdown-toggle"
-                  href="#empty"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  v-pre
-                >
-                  Kouyate Karim
-                </a>
-
-                <div
-                  className="dropdown-menu dropdown-menu-right"
-                  aria-labelledby="navbarDropdown"
-                >
-                  <a className="dropdown-item" href="#empty">
-                    Deconnexion
-                  </a>
-                </div>
-              </li> */}
             </ul>
           </div>
         </div>
