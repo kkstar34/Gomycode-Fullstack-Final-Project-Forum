@@ -25,7 +25,7 @@ function Header() {
     <div id="app" className="">
       <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div className="container">
-          <Link  to="/" className="navbar-brand">
+          <Link  to="/home" className="navbar-brand">
             Forum
           </Link>
           <button
@@ -70,7 +70,7 @@ function Header() {
                 </li>
 
                 <li className="nav-item">
-                  <Link className="nav-link" to="register">
+                  <Link className="nav-link" to="/register">
                       Register
                   </Link>
                 </li>
