@@ -1,8 +1,46 @@
 import React from 'react'
 import Question from './Question';
 import { Link } from 'react-router-dom';
+import { query, collection, onSnapshot, getDoc } from 'firebase/firestore';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import db from '../config/firebaseConfig';
 
 function QuestionList() {
+
+const [questions, setquestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect( () =>{
+
+    const q = query(collection(db, "questions"));
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      let quizArray = [];
+      let catArray = [];
+      querySnapshot.forEach((doc) => {
+        
+        
+        doc.data().categories.forEach((category) => {
+            getDoc(category).then(data => {
+                catArray.push(data.data());
+            })       
+        })
+        
+        quizArray.push({ ...doc.data(), id: doc.id , categories: catArray});
+      });
+      setquestions(quizArray);
+      setLoading(false);
+    });
+
+  
+
+  return() =>{
+    unsub();
+  }
+
+    
+
+  }, [])
   return (
     <>
          <div className="col-lg-9 col-md-12">
@@ -22,10 +60,11 @@ function QuestionList() {
                     </div> */}
 
 
-
                     {/* map Questions */}
-
-                    <Question/>
+                        {questions.map((question) =>{
+                        return <Question question={question} key={question.id}/>
+                        })}
+                  
 
                 
 

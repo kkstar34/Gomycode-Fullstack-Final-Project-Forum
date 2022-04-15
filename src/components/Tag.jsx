@@ -1,9 +1,10 @@
 import React from 'react'
 
-function Tag() {
+function Tag({tag}) {
   return (
     <>
-        <a href="#empty" className="question__tags">React</a>
+    
+        <a href="#empty" className="question__tags">{tag}</a>
     </>
   )
 }

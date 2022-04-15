@@ -45,6 +45,7 @@ function Home() {
 
         <div className="container my-4">
             <div className="row">
+              {console.log(categories)}
                     {loading ? <CategoryLoader/> : <Categories categories={categories}/>}
                     <QuestionList/>
             </div>

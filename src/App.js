@@ -12,7 +12,7 @@ function App() {
   return (
     <UserAuthContextProvider>
     <Routes>
-      <Route path="/home" element={<AuthMiddleware> <Home/> </AuthMiddleware>}/>
+      <Route path="/home" element={ <Home/>} />
       <Route path="/question/:id/details" element={<QuestionDetails/>}/>
       <Route path="/add-question" element={<AddQuestion/>}/>
       <Route path="/" element={<Login/>}/>

@@ -17,14 +17,16 @@ import Tags from "@yaireo/tagify/dist/react.tagify";
     callbacks: {}
   };
 
-  function TagField({ label, name, initialValue = [], suggestions = [] }) {
+  function TagField({ label, name, initialValue = [], suggestions = [], onChange }) {
     const handleChange = e => {
-      console.log(e.type, " ==> ", e.detail.tagify.value.map(item => item.value));
+      // console.log(e.type, " ==> ", e.detail.tagify.value.map(item => onChange(item)));
+        onChange(e.detail.tagify.value)
     };
   
     const settings = {
       ...baseTagifySettings,
       whitelist: suggestions,
+      enforceWhitelist: true,
       callbacks: {
         add: handleChange,
         remove: handleChange,
