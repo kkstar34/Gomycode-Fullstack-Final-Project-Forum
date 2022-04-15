@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import Tag from './Tag';
 
 function Question({question}) {
-    console.log(question.categories);
+    
   return (
     <>
 
 <div className="card no-border p-3 my-3">
                     <div className="question ">
                         <h2 className="question__title">
-                            <Link to={`/question/1/details`} className="question__link">
+                            <Link to={`/question/${question.id}/details`} className="question__link">
                             {question.title}
                             </Link>
                         </h2>
@@ -23,7 +23,7 @@ function Question({question}) {
                             <div>
                                 {/* map tags */}
                               {question.categories.map((category) =>{
-                                  return  <Tag tag={category.title}/>
+                                  return  <Tag tag={category.title}  key={category.id}/>
                               })}
                                
                             </div>

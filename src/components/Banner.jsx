@@ -1,7 +1,17 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { updateFilter } from '../redux/actions/questionAction';
 
 
 function Banner() {
+  const dispatch = useDispatch();
+
+  const hanldeChangeFilter = (e) => {
+    e.preventDefault();
+    dispatch(updateFilter(e.target.value));
+
+
+  }
   return (
     <div className="banner">
         <div className="d-flex justify-content-center align-items-center h-100 flex-column">
@@ -14,7 +24,7 @@ function Banner() {
                     </p>
 
                     <div className="w-100">
-                        <input type="text" className="form-control form-control-lg w-100"  placeholder="Rechercher des questions" />
+                        <input type="text" className="form-control form-control-lg w-100"  placeholder="Rechercher des questions" onChange={hanldeChangeFilter}/>
                     </div>
                 </div>
         </div>

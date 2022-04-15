@@ -4,6 +4,8 @@ import TagField from "./../components/TagField";
 import { query, collection, onSnapshot, addDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import db from "./../config/firebaseConfig";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddQuestion() {
   const [suggestions, setsuggestions] = useState();
@@ -11,6 +13,11 @@ function AddQuestion() {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(true);
   const [selectedCats, setSelectedCats] = useState([]);
+  const [titleError, setTitleError] = useState("");
+  const [contentError, setContentError] = useState("");
+
+  const [Addloading, setAddloading] = useState(false);
+
   useEffect(() => {
     const q = query(collection(db, "categories"));
     const unsub = onSnapshot(q, (querySnapshot) => {
@@ -50,16 +57,52 @@ function AddQuestion() {
         categories : tab
     }
 
-    document.getElementById("quizForm").reset();
-    
+    if(title === ""){
 
-    addDoc(collection(db, "questions"), question)
-    .then((doc)=>{ 
-       console.log("question crée avec succes: ", doc.id);
-    })
-    .catch((err)=>{
-       console.error("erreur lors de l'ajout: de la question ", err);
-    });
+      setTitleError("le champs titre est requis")
+      return false;
+    }else{
+      setTitleError("")
+    }
+
+    if(content === ""){
+
+      setContentError("le champs content doit être rempli")
+      return false;
+
+    }else{
+      setContentError("")
+    }
+
+
+  
+    
+    setAddloading(true)
+
+    const addQuiz = () => {
+      return addDoc(collection(db, "questions"), question)
+      .then((doc)=>{ 
+         console.log("question crée avec succes: ", doc.id);
+         document.getElementById("quizForm").reset();
+         setAddloading(false)
+      })
+      .catch((err)=>{
+         console.error("erreur lors de l'ajout: de la question ", err);
+         setAddloading(false)
+      })
+    }
+
+
+
+    toast.promise(
+      addQuiz(),
+      {
+        pending: 'ajout de la question en cours',
+        success: 'Question ajouté avec succès 👌',
+        error: 'Erreur lors de ajout: de la question🤯'
+      }
+  );
+    
 
   }
   return (
@@ -73,6 +116,7 @@ function AddQuestion() {
                 Vous rencontrez des problèmes? Notre communauté de développeurs
                 est là pour vous aider!
               </span>
+              <ToastContainer />
             </div>
 
             <div className="col-2">
@@ -87,11 +131,12 @@ function AddQuestion() {
                 </label>
                 <input
                   type="text"
-                  className="form-control"
+                  className={titleError ? "form-control is-invalid" : "form-control" }
                   id="title"
                   name="title"
                   onChange={(e) => setTitle(e.target.value)}
                 />
+                {titleError && <span className="invalid-feedback">{titleError}</span>}
               </div>
               <div className="col-12 form-group">
                 <label htmlFor="content" className="questions__form-label">
@@ -102,9 +147,10 @@ function AddQuestion() {
                   id="content"
                   cols="30"
                   rows="10"
-                  className="form-control "
+                  className={contentError ? "form-control is-invalid" : "form-control" }
                   onChange={(e) => setContent(e.target.value)}
                 ></textarea>
+                {contentError && <span className="invalid-feedback">{contentError}</span>}
               </div>
 
               <div className="col-12 form-group">
@@ -131,7 +177,10 @@ function AddQuestion() {
                   type="submit"
                   className="btn btn-primary d-block shadow-md w-100 btn-lg"
                 >
-                  Poser ma question <i className="la la-arrow-right"></i>
+                  
+
+                  {Addloading ?  <> <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...</> : <>Poser ma question <i className="la la-arrow-right"></i></>
+                            }
                 </button>
               </div>
             </form>
