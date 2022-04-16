@@ -76,7 +76,9 @@ function QuestionList() {
     <>
       <div className="col-lg-9 col-md-12">
         <div className="d-flex justify-content-between">
-          <span>{questions.length} questions.</span>
+          <span>{questions.filter((q) =>
+            q.title.toLowerCase().includes(filter.toLowerCase())
+          ).length} questions.</span>
           <Link className="btn btn-primary" to="/add-question">
             Poser une question <i className="la la-arrow-right"></i>
           </Link>

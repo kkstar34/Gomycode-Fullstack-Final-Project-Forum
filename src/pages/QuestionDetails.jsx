@@ -15,14 +15,24 @@ function QuestionDetails() {
     const dispatch = useDispatch();
     let id = useParams().id;
     let q = doc(db, "questions", id);
-
+    const [u, setU] = useState();
     const question = useSelector((state)=> {
         return state.questions;
     } )
+
+    // console.log(question.user_id)
     
+    // let qe = doc(db, "users", question.user_ref);
+
+   
     useEffect(() => {
         const sub = async()=>{
-        const doc =await getDoc(q);
+         const doc =await getDoc(q);
+        // const userDoc = await getDoc(qe);
+        // console.log(userDoc);
+        // for(let i=0; i<userDoc.length; i++){
+        //     console.log(userDoc[i].data());
+        // }
         dispatch(getSingleQuestion({...doc.data(), ref  : doc.ref}));
         }
         // const unsb =  onSnapshot(q, async(querySnapshot)=>{
@@ -54,7 +64,7 @@ function QuestionDetails() {
                                 width="20"
                                 height="20"
                             />
-                            <span className="text-black ml-2">Kouyate Karim</span>
+                            <span className="text-black ml-2">{u ? u.email : null}</span>
                             </span>
                         </div>
                         <Comments comments={question.comments} />

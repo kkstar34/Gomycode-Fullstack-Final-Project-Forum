@@ -25,7 +25,6 @@ function Home() {
       let catArray = [];
       let querySnapshotArray = querySnapshot.docs;
       for(let i=0; i<querySnapshotArray.length;i++) {
-        console.log(i)
         let categoryQuestionsArray = [];
         const quer = query(
           collection(db, "questions"),
@@ -33,7 +32,6 @@ function Home() {
         );
         let snapshots = await getDocs(quer);
         let snapshotsArray =   snapshots.docs;
-        console.log(snapshotsArray)
         for(let j=0; j< snapshotsArray.length; j++){
            categoryQuestionsArray.push(snapshotsArray[j].data());
          }

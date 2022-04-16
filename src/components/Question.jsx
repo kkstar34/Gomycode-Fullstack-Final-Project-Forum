@@ -19,7 +19,7 @@ function Question({question}) {
                             {question.content}
                         </p>
                         <div className="d-flex justify-content-between">
-                            <span className="question__answers-count">2 reponses</span>
+                            <span className="question__answers-count">{ question.comments ? question.comments.length : 0} reponses</span>
                             <div>
                                 {/* map tags */}
                               {question.categories.map((category) =>{

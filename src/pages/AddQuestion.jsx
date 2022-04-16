@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import TagField from "./../components/TagField";
-import { query, collection, onSnapshot, addDoc } from "firebase/firestore";
+import { query, collection, onSnapshot, addDoc, getDocs, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import db from "./../config/firebaseConfig";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useUserAuth } from './../context/UserAuthContextProvider';
 
 function AddQuestion() {
   const [suggestions, setsuggestions] = useState();
@@ -15,6 +16,7 @@ function AddQuestion() {
   const [selectedCats, setSelectedCats] = useState([]);
   const [titleError, setTitleError] = useState("");
   const [contentError, setContentError] = useState("");
+  const {user} = useUserAuth();
 
   const [Addloading, setAddloading] = useState(false);
 
@@ -39,7 +41,7 @@ function AddQuestion() {
 
   
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
 
     event.preventDefault();
 
@@ -48,13 +50,24 @@ function AddQuestion() {
        return  s.id;
     })
 
-    console.log(tab);
+    let q = query(collection(db, "users"), where('email', '==', user.email) );
+    let u = await getDocs(q);
+    u = u.docs;
+    let userId ;
+    let userRef;
+    for (let i = 0; i < u.length; i++) {
+      userRef = u[i].ref;
+      userId =  u[i].id;
+      
+    }
     
 
     let question = {
         title : title,
         content : content,
-        categories : tab
+        categories : tab,
+        user_id : userId,
+        user_ref : userRef
     }
 
     if(title === ""){
