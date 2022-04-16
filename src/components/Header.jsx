@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserAuth } from './../context/UserAuthContextProvider';
+import AuthLoader from './loaders/AuthLoader';
 
 function Header() {
   const {user, logOut} = useUserAuth();
+
+
   const navigate = useNavigate();
   const handleLogout = async(e) =>
 
@@ -42,9 +45,9 @@ function Header() {
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto"></ul>
-
+            {user?  
             <ul className="navbar-nav ml-auto">
-              {user ? 
+              {user.email ? 
                <>
                 <li className="nav-item">
                 <Link className="nav-link" to="/">
@@ -78,6 +81,9 @@ function Header() {
               }
               
             </ul>
+            
+            : <AuthLoader/> }
+           
           </div>
         </div>
       </nav>

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Stack, Skeleton, Avatar} from '@mui/material'
+import {Stack, Skeleton} from '@mui/material'
 
 function QuestionLoader(props) {
   return (

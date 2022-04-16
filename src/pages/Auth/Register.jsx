@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import AuthSideBar from "./../../components/AuthSideBar";
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserAuth } from './../../context/UserAuthContextProvider';
+import { addDoc, collection } from 'firebase/firestore';
+import db from "../../config/firebaseConfig";
 
 function Register() {
 
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const {signUp} = useUserAuth();
@@ -14,12 +17,15 @@ function Register() {
   const handleSubmit= async(e) =>{
     e.preventDefault();
     setLoading(true);
+    const user= {
+        name : name,
+        email : email,
+    }
     try {
-
       await signUp(email, password);
+      await addDoc(collection(db, "users"), user)
       setLoading(false);
       navigate('/');
-
     }
 
     catch(err) {
@@ -54,7 +60,7 @@ function Register() {
                           type="text"
                           className="form-control "
                           name="name"
-                          
+                          onChange={(e) => setName(e.target.value)}
                           autoComplete="name"
                           autoFocus
                           

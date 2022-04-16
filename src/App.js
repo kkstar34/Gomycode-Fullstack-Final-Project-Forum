@@ -6,7 +6,7 @@ import AddQuestion from './pages/AddQuestion';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import { UserAuthContextProvider } from './context/UserAuthContextProvider';
-import AuthMiddleware from './middleware/AuthMiddleware';
+// import AuthMiddleware from './middleware/AuthMiddleware';
 
 function App() {
   return (

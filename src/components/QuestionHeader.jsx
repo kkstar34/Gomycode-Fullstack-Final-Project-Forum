@@ -1,11 +1,11 @@
 import React from 'react'
 import Tag from './Tag';
 
-function QuestionHeader() {
+function QuestionHeader({question}) {
   return (
     <>
         <span className="question-detail__head">
-                        Question
+                        {question.title}
                     </span>
                     <div className="question-detail__title">
                         <a href="#empty" className="d-flex flex-column align-items-center no-underline ">
@@ -16,7 +16,7 @@ function QuestionHeader() {
                         </a>
                         <div>
                             <h1>
-                                Question 1
+                                {question.title}
                             </h1>
                             <div>
                                 {/* map Questions tags  */}
@@ -26,13 +26,8 @@ function QuestionHeader() {
                     </div>
 
                     <div className="question-detail__content">
-                        <p>
-                            Content
-                        </p>
-
                         <pre>
-                            const john = new Person();
-                            john.sayHello();
+                            {question.content}
                         </pre>
                        
                         {/* <button className="btn btn-danger text-white text-right shadow-sm ms-1" >Delete</button>
