@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import Tag from './Tag';
-
+import moment from 'moment';
 function Question({question}) {
     
   return (
@@ -14,7 +14,7 @@ function Question({question}) {
                             {question.title}
                             </Link>
                         </h2>
-                        <div className="question__time">il y'a 2 min</div>
+                        <div className="question__time">{moment(question.updated_at.toDate()).calendar()}</div>
                         <p className="question__description my-2">
                             {question.content}
                         </p>

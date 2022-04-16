@@ -2,10 +2,12 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import { getDoc, doc} from 'firebase/firestore';
 import db from '../config/firebaseConfig';
+import moment from "moment";
 
 function Comment({comment}) {
     const [u, setU] = useState();
      let q = doc(db, "users", comment.user_uid);
+     console.log(comment.updated_at)
 
     useEffect(() =>{
      getDoc(q).then((doc) =>{
@@ -35,7 +37,8 @@ function Comment({comment}) {
             </div>
             <div className="comment__ago">
               <i className="la la-clock-o"></i>
-              il y'a 1 min.
+              {/* {moment(comment.updated_at.toDate()).calendar()} */}
+              il y'a 1min
             </div>
           </div>
           <div className="comment__text">

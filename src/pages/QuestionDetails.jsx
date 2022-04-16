@@ -15,24 +15,17 @@ function QuestionDetails() {
     const dispatch = useDispatch();
     let id = useParams().id;
     let q = doc(db, "questions", id);
-    const [u, setU] = useState();
+   
     const question = useSelector((state)=> {
         return state.questions;
     } )
-
-    // console.log(question.user_id)
     
-    // let qe = doc(db, "users", question.user_ref);
+  
 
    
     useEffect(() => {
         const sub = async()=>{
          const doc =await getDoc(q);
-        // const userDoc = await getDoc(qe);
-        // console.log(userDoc);
-        // for(let i=0; i<userDoc.length; i++){
-        //     console.log(userDoc[i].data());
-        // }
         dispatch(getSingleQuestion({...doc.data(), ref  : doc.ref}));
         }
         // const unsb =  onSnapshot(q, async(querySnapshot)=>{
@@ -48,26 +41,14 @@ function QuestionDetails() {
   return (
     <div className="w-100 h-100 bg-white">
         <div className="container" style={{marginTop: "3.5rem"}}>
-            {question ?
+            {question.title ?
             
 
             <div className="row">
                 <div className="col-md-12 col-lg-9">
                         <QuestionHeader question={question}/>
                         <hr />
-                        <div className="mb-4 answers-count ">
-                            <span className="text-dark-blue font-weight-bold">{question.comments && question.comments.length} reponses</span>
-                            <span className="d-flex align-items-center">
-                            <img
-                                src={process.env.PUBLIC_URL + "/img/avatar.png"}
-                                alt=""
-                                width="20"
-                                height="20"
-                            />
-                            <span className="text-black ml-2">{u ? u.email : null}</span>
-                            </span>
-                        </div>
-                        <Comments comments={question.comments} />
+                        <Comments comments={question.comments} question={question}/>
                         <AddComment question={question}/>
                 </div>
                 <div className="col-md-12 col-lg-3">

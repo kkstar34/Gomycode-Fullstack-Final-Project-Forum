@@ -31,12 +31,12 @@ function AddComment({ question }) {
       return false;
      
     }
-   
-   
     let commentObj = {
       user_ref :userRef,
       user_uid: userId,
       content: comment,
+      created_at : new Date(), 
+      updated_at : new Date()
     };
     setLoading(true);
     await updateDoc(question.ref, {

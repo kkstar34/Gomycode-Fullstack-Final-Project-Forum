@@ -67,7 +67,9 @@ function AddQuestion() {
         content : content,
         categories : tab,
         user_id : userId,
-        user_ref : userRef
+        user_ref : userRef,
+        created_at : new Date(), 
+        updated_at : new Date()
     }
 
     if(title === ""){
