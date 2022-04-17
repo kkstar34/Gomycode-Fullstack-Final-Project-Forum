@@ -30,7 +30,7 @@ function Header() {
       <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div className="container">
           <Link  to="/home" className="navbar-brand">
-            Baroland
+            Baroland/Test
           </Link>
           <button
             className="navbar-toggler"
