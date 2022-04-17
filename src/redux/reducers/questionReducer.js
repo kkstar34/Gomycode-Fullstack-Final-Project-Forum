@@ -17,11 +17,27 @@ function questionReducer(state ={filter : "", comments : []}, action) {
             return {...state, ...action.payload};
         }
         case ActionTypes.ADD_COMMENT :{
-            if(state.comments){
                 state.comments.push(action.payload);
-            }
-            return {...state, ...action.payload} ;
+            return {...state} ;
         }
+
+        case ActionTypes.CONNEXION_REFUSED :{
+           
+        return {...state, 'error' : action.payload}; 
+        
+        }
+
+        case ActionTypes.CLEAN_ERROR :{
+           
+            return {...state, 'error' : ""}; 
+            
+            }
+
+        case ActionTypes.CLEAN_FILTER :{
+    
+            return {...state, 'filter' : action.payload}; 
+            
+            }
 
         default: {
             return state

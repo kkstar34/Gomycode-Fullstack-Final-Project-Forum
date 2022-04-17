@@ -30,3 +30,26 @@ export function addComment(comment){
         payload : comment
     }
 }
+
+
+export function connexionRefused(){
+    return {
+        type : ActionTypes.CONNEXION_REFUSED,
+        payload : "Veuillez vous connecter avant d'acceder à cette page svp!"
+    }
+}
+
+export function cleanError(){
+    return {
+        type : ActionTypes.CLEAN_ERROR,
+        payload : ""
+    }
+}
+
+
+export function cleanFilter(){
+    return {
+        type : ActionTypes.CLEAN_FILTER,
+        payload : ""
+    }
+}

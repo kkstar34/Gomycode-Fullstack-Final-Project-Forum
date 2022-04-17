@@ -5,13 +5,15 @@ import { query, collection, onSnapshot, getDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useEffect } from "react";
 import db from "../config/firebaseConfig";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import IllustrationEmptyQuiz from "./illustrations/IllustrationEmptyQuiz";
 import QuestionLoader from "./loaders/QuestionLoader";
+import { cleanFilter } from './../redux/actions/questionAction';
 
 function QuestionList() {
   const [questions, setquestions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   let filter = useSelector((state) => {
     return state.questions.filter
   
@@ -68,6 +70,7 @@ function QuestionList() {
     // sub()
 
     return () => {
+      dispatch(cleanFilter());
       unsub();
     };
   }, []);

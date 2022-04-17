@@ -7,14 +7,12 @@ import moment from "moment";
 function Comment({comment}) {
     const [u, setU] = useState();
      let q = doc(db, "users", comment.user_uid);
-     console.log(comment.updated_at)
 
     useEffect(() =>{
      getDoc(q).then((doc) =>{
         setU(doc.data());
        }
    )
-
     }, [])
   return (
       

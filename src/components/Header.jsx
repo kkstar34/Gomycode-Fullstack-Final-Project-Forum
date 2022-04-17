@@ -7,6 +7,7 @@ function Header() {
   const {user, logOut} = useUserAuth();
 
 
+
   const navigate = useNavigate();
   const handleLogout = async(e) =>
 
@@ -29,7 +30,7 @@ function Header() {
       <nav className="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div className="container">
           <Link  to="/home" className="navbar-brand">
-            Forum
+            Baroland
           </Link>
           <button
             className="navbar-toggler"
@@ -50,10 +51,8 @@ function Header() {
               {user.email ? 
                <>
                 <li className="nav-item">
-                <Link className="nav-link" to="/">
+                <Link className="nav-link" to="/profil">
                   {user.email}
-
-            
                 </Link>
               </li>
 
@@ -63,7 +62,6 @@ function Header() {
                 </a>
               </li>
               </>
-
                 : 
                 <>
                 <li className="nav-item">

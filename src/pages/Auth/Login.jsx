@@ -1,8 +1,12 @@
 import React from 'react'
 import AuthSideBar from './../../components/AuthSideBar';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUserAuth } from './../../context/UserAuthContextProvider';
+import { useSelector, useDispatch } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { cleanError } from '../../redux/actions/questionAction';
 
 function Login() {
   const [loading, setLoading] = useState(false);
@@ -12,6 +16,20 @@ function Login() {
   const [error, setError] = useState("");
   const {logIn} = useUserAuth();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
+  let errorConnexion = useSelector((state) => {
+      return state.questions.error;
+  })
+
+
+  useEffect(() => {
+
+    return ()=> {
+      dispatch(cleanError());
+    }
+  }, [])
   const handleSubmit= async(e) =>{
     e.preventDefault();
     setLoading(true);
@@ -35,15 +53,16 @@ function Login() {
     <>
     
     <div className="container-fluid">
+      <ToastContainer/>
         <div className="row p-3" style={{height: '100vh'}}>
           <AuthSideBar />
           <div className="col-md-12 col-lg-6">
           <div className="container h-100">
         <div className="row justify-content-center h-100">
             <div className="col-sm-12 col-md-8 d-flex flex-column justify-content-center">
-
+              {/* {errorConnexion && <div className="alert alert-danger">{errorConnexion}</div>} */}
+              {errorConnexion && toast(errorConnexion)}
                 <h1 style={{color: "#1E1E64"}}>Se connecter</h1>
-
                 {error && <div className="alert alert-danger">{error}</div> }
                 <form method="POST"  className="w-100" onSubmit={handleSubmit}>
                    

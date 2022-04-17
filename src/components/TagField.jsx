@@ -40,7 +40,7 @@ import Tags from "@yaireo/tagify/dist/react.tagify";
       }
     };
   
-    console.log("InitialValue", initialValue);
+    
   
     return (
       <div className="form-group">

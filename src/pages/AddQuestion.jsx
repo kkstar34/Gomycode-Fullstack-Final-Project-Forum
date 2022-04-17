@@ -36,7 +36,6 @@ function AddQuestion() {
   }, []);
   const handleChangeAdd = (event) => {
     setSelectedCats(event);
-    console.log(selectedCats, event);
   };
 
   
@@ -97,7 +96,6 @@ function AddQuestion() {
     const addQuiz = () => {
       return addDoc(collection(db, "questions"), question)
       .then((doc)=>{ 
-         console.log("question crée avec succes: ", doc.id);
          document.getElementById("quizForm").reset();
          setAddloading(false)
       })
