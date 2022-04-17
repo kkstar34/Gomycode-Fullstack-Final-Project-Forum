@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "https://baroland.netlify.app/static/css/main.d0d2e44f.css",
+    "main.css": "https://baroland.netlify.app/static/css/main.d7b1f138.css",
     "main.js": "https://baroland.netlify.app/static/js/main.9ca018a0.js",
     "static/js/787.a3e02b03.chunk.js": "https://baroland.netlify.app/static/js/787.a3e02b03.chunk.js",
     "index.html": "https://baroland.netlify.app/index.html",
-    "main.d0d2e44f.css.map": "https://baroland.netlify.app/static/css/main.d0d2e44f.css.map",
+    "main.d7b1f138.css.map": "https://baroland.netlify.app/static/css/main.d7b1f138.css.map",
     "main.9ca018a0.js.map": "https://baroland.netlify.app/static/js/main.9ca018a0.js.map",
     "787.a3e02b03.chunk.js.map": "https://baroland.netlify.app/static/js/787.a3e02b03.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d0d2e44f.css",
+    "static/css/main.d7b1f138.css",
     "static/js/main.9ca018a0.js"
   ]
 }
