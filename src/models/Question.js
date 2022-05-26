@@ -31,7 +31,7 @@ class QuestionModel {
         let querySnapshot = await getDocs(q);
         let quizArray = [];
         let querySnapshotArray = querySnapshot.docs;
-        let cat = [];
+        let cat;
         for (let i = 0; i < querySnapshotArray.length; i++) {
             let catdocs = [];
             for (let j = 0;j < querySnapshotArray[i].data().categories.length;j++) {

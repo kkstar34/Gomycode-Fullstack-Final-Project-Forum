@@ -15,13 +15,7 @@ class CommentModel {
         let q = doc(db, "users", this.search_id);
         const docQuery = await getDoc(q);
         return  docQuery.data();
-    
     }
-
-
-
-
 }
-
 
 export default CommentModel;

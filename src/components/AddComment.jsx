@@ -5,35 +5,30 @@ import { updateDoc, arrayUnion, where, collection, query, getDocs } from "fireba
 import db from "../config/firebaseConfig";
 import { useDispatch } from 'react-redux';
 import { addComment } from './../redux/actions/questionAction';
+import UserModel from './../models/User';
 
 
 function AddComment({ question }) {
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const { user } = useUserAuth();
+  const [userF, setUserF] = useState();
   const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
-    
-    
     event.preventDefault();
-    let q = query(collection(db, "users"), where('email', '==', user.email) );
-    let u = await getDocs(q);
-    u = u.docs;
-    let userId ;
-    let userRef;
-    for (let i = 0; i < u.length; i++) {
-      userRef = u[i].ref;
-      userId =  u[i].id;
-      
-    }
+    const userModel = new UserModel();
+    const userPromise = userModel.getUser(user.email);
+    userPromise.then((user) => {
+      setUserF(user);
+    })
     if(comment === ""){
       return false;
      
     }
     let commentObj = {
-      user_ref :userRef,
-      user_uid: userId,
+      user_ref : userF.userRef,
+      user_uid: userF.userId,
       content: comment,
       created_at : new Date(), 
       updated_at : new Date()

@@ -1,0 +1,2 @@
+on utilise getDoc sur une reference ref directement,
+on crée un doc avec un id ou un uid avant d'utiliser le getDoc.
