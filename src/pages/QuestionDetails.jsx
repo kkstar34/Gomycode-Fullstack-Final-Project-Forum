@@ -3,18 +3,17 @@ import QuestionHeader from '../components/QuestionHeader';
 import { Link, useParams } from 'react-router-dom';
 import AddComment from '../components/AddComment';
 import Comments from '../components/Comments';
-import { useEffect, useState } from 'react';
-import { getDoc, doc, onSnapshot } from 'firebase/firestore';
-import db from '../config/firebaseConfig';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSingleQuestion } from '../redux/actions/questionAction';
+import QuestionModel from './../models/Question';
 
 function QuestionDetails() {
 
     // const [question, setQuestion] = useState();
     const dispatch = useDispatch();
     let id = useParams().id;
-    let q = doc(db, "questions", id);
+    
    
     const question = useSelector((state)=> {
         return state.questions;
@@ -25,12 +24,12 @@ function QuestionDetails() {
    
     useEffect(() => {
         const sub = async()=>{
-         const doc =await getDoc(q);
-        dispatch(getSingleQuestion({...doc.data(), ref  : doc.ref}));
+        let questionModel = new QuestionModel(id);
+        let questionPromise = questionModel.getQuestion();
+        questionPromise.then((question) =>{
+            dispatch(getSingleQuestion(question));
+        })
         }
-        // const unsb =  onSnapshot(q, async(querySnapshot)=>{
-        //     setQuestion({...querySnapshot.data(), ref  : querySnapshot.ref})
-        // })
 
         sub()
 

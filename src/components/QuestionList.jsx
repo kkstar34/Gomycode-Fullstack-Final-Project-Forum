@@ -1,14 +1,13 @@
 import React from "react";
 import Question from "./Question";
 import { Link } from "react-router-dom";
-import { query, collection, onSnapshot, getDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useEffect } from "react";
-import db from "../config/firebaseConfig";
 import { useDispatch, useSelector } from "react-redux";
 import IllustrationEmptyQuiz from "./illustrations/IllustrationEmptyQuiz";
 import QuestionLoader from "./loaders/QuestionLoader";
 import { cleanFilter } from './../redux/actions/questionAction';
+import QuestionModel from './../models/Question';
 
 function QuestionList() {
   const [questions, setquestions] = useState([]);
@@ -16,62 +15,40 @@ function QuestionList() {
   const dispatch = useDispatch();
   let filter = useSelector((state) => {
     return state.questions.filter
-  
   });
-
-  // const sub = async ()=>{
-  //   const q = query(collection(db, "questions"));
-  //   setLoading(true);
-  //   let querySnapshot = await getDocs(q);
-  //   let quizArray = []
-  //     querySnapshot.forEach( async(doc) => {
-  //       let catArray = [];
-  //        doc.data().categories.forEach( async(category) => {
-  //         let data = await getDoc(category);
-  //         catArray.push({...data.data() , id : data.id});
-  //         setUpdate([]);
-  //     })
-
-  //     quizArray.push({...doc.data(), id: doc.id, categories: catArray});
-  //   });
-
-  //   console.log(quizArray)
-  //   setquestions(quizArray);
-  //   setLoading(false);
-
-  // }
-
   useEffect(() => {
-    const q = query(collection(db, "questions"));
     setLoading(true);
-    const unsub = onSnapshot(q, async (querySnapshot) => {
-      let quizArray = [];
-      let querySnapshotArray = querySnapshot.docs;
-      let cat = [];
-      for (let i = 0; i < querySnapshotArray.length; i++) {
-        let catdocs = [];
-        for (
-          let j = 0;
-          j < querySnapshotArray[i].data().categories.length;
-          j++
-        ) {
-          cat = await getDoc(querySnapshotArray[i].data().categories[j]);
-          catdocs.push({ ...cat.data(), id: cat.id });
-        }
-        quizArray.push({
-          ...querySnapshotArray[i].data(),
-          id: querySnapshotArray[i].id,
-          categories: catdocs,
-        });
-      }
-      setquestions(quizArray);
+    const questionModel = new QuestionModel();
+    const questionPromise = questionModel.getQuestionsWithCategories();
+    questionPromise.then((questions) => {
+      setquestions(questions);
+      console.log(questions);
       setLoading(false);
-    });
+    })
+     // const q = query(collection(db, "questions"));
+    // const unsub = onSnapshot(q, async (querySnapshot) => {
+    //   let quizArray = [];
+    //   let querySnapshotArray = querySnapshot.docs;
+    //   let cat = [];
+    //   for (let i = 0; i < querySnapshotArray.length; i++) {
+    //     let catdocs = [];
+    //     for (let j = 0; j < querySnapshotArray[i].data().categories.length;j++) {
+    //       cat = await getDoc(querySnapshotArray[i].data().categories[j]);
+    //       catdocs.push({ ...cat.data(), id: cat.id });
+    //     }
+    //     quizArray.push({
+    //       ...querySnapshotArray[i].data(),
+    //       id: querySnapshotArray[i].id,
+    //       categories: catdocs,
+    //     });
+    //   }
+    //   setquestions(quizArray);
+    //   setLoading(false);
+    // });
     // sub()
 
     return () => {
       dispatch(cleanFilter());
-      unsub();
     };
   }, []);
 

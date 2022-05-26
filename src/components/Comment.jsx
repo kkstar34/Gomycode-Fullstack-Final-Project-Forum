@@ -3,20 +3,24 @@ import { useEffect, useState } from 'react';
 import { getDoc, doc} from 'firebase/firestore';
 import db from '../config/firebaseConfig';
 import moment from "moment";
+import CommentModel from './../models/Comment';
 
 function Comment({comment}) {
     const [u, setU] = useState();
-     let q = doc(db, "users", comment.user_uid);
+    const [loading, setLoading] = useState(false);
+    const commentModel = new CommentModel(comment.user_uid);
 
     useEffect(() =>{
-     getDoc(q).then((doc) =>{
-        setU(doc.data());
-       }
-   )
+      const userPromise =  commentModel.getUser();
+      setLoading(true)
+      userPromise.then((user) => {
+        setU(user);
+        setLoading(false)
+      })
     }, [])
   return (
-      
-    <div className="comment "> 
+      <>
+    {loading ? 'loading...' : <div className="comment "> 
     {/* good-answer */}
         <a href="#empty" className="comment__likes-count no-underline">
           <i className="la la-heart-o"></i>
@@ -47,7 +51,9 @@ function Comment({comment}) {
                             <button className="btn btn-primary text-white text-right shadow-sm ms-1" >Edit</button>
                             <button className="btn btn-success text-white text-right shadow-sm ms-1" >Best Answer</button> */}
         </div>
-      </div>
+      </div>}
+
+      </>
   )
 }
 

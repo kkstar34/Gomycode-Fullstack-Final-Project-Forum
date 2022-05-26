@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
-import { doc, getDoc } from "firebase/firestore";
-import db from "../config/firebaseConfig";
+import QuestionModel from './../models/Question';
 
 function Comments({ comments, question }) {
-   let qe = doc(db, "users", question.user_id);
+   const questionModel = new QuestionModel(question.user_id);
   const [u, setU] = useState();
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
-   
-     getDoc(qe).then((doc) => {
-        setU(doc.data());
-     });
+      setLoading(true)
+      const userPromise = questionModel.getUser();
+      userPromise.then((user) => {
+        setU(user);
+        setLoading(false);
+      })
   }, []);
   return (
     <>
-      <div className="mb-4 answers-count ">
+     <div className="mb-4 answers-count ">
         <span className="text-dark-blue font-weight-bold">
           {comments && comments.length} reponses
         </span>
